@@ -1,6 +1,4 @@
-def main():
-    print("Hello from mvv-pipeline!")
+from ingestion.extract import get_station 
 
-
-if __name__ == "__main__":
-    main()
+result = get_station("München Hbf")
+print(result)
