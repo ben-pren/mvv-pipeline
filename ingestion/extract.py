@@ -20,3 +20,14 @@ def get_station(station: str) -> str:
     
     response = requests.get(url, headers=headers)
     return response.text 
+
+def get_changes (eva_no: str) -> str:
+    url=f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_no}"
+    headers = {
+        "DB-Client-ID": client,
+        "DB-Api-Key": key,
+        "accept": "application/xml"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.text
