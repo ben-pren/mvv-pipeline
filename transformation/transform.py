@@ -1,5 +1,8 @@
 import xml.etree.ElementTree as ET
 from datetime import datetime
+from utils.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def parse_time (time: str | None) -> str | None:
@@ -23,7 +26,8 @@ def transform_raw_data ( data: str) -> list[dict]:
         if s.find("dp") is not None:
             dp = s.find("dp")
             if dp.get("fb") is not None or dp.get("l") is not None:
-                new_list.append({"zug": dp.get("fb"),
+                if dp.get("pt") is not None or dp.get("ct") is not None:
+                    new_list.append({"zug": dp.get("fb"),
                              "geplante_zeit": parse_time(dp.get("pt")),
                              "tatsaechliche_zeit": parse_time(dp.get("ct")),
                              "gleis": dp.get("pp"),
@@ -53,4 +57,7 @@ def join_plan_and_changes (changes: list[dict], plan: dict):
             eintrag["geplante_zeit"] = parse_time(pt_plan)
             eintrag["verspaetung_min"] = calculate_delay(pt_plan, eintrag["ct_raw"])
         list_verspaetung.append(eintrag)
+    list_verspaetung = [e for e in list_verspaetung if e["geplante_zeit"] is not None or e["tatsaechliche_zeit"] is not None]
+    logger.info("Daten zusammengefügt")
     return list_verspaetung
+
