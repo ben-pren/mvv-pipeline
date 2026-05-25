@@ -16,7 +16,7 @@ def calculate_delay (pt: str | None, ct: str | None) -> int | None:
     verspaetung = (ct - pt).seconds // 60
     return verspaetung 
 
-def transform_raw_data ( data: str,) -> list[dict]:
+def transform_raw_data ( data: str) -> list[dict]:
     root = ET.fromstring(data)
     new_list = []
     for s in root:
@@ -29,6 +29,28 @@ def transform_raw_data ( data: str,) -> list[dict]:
                              "gleis": dp.get("pp"),
                              "linie": dp.get("l"),
                              "richtung": dp.get("ppth"),
-                             "verspaetung_min" : calculate_delay(dp.get("pt"), dp.get("ct"))
+                             "verspaetung_min" : calculate_delay(dp.get("pt"), dp.get("ct")),
+                             "id": s.get("id"),
+                             "ct_raw": dp.get("ct")
                              })
     return new_list   
+
+def transform_plan (data: str) -> dict:
+    root = ET.fromstring(data)
+    plan_dict = {}
+    for s in root:
+        stop_id = s.get("id")
+        dp = s.find("dp")
+        if stop_id is not None and dp is not None:
+            plan_dict[stop_id] = dp.get("pt")
+    return plan_dict
+
+def join_plan_and_changes (changes: list[dict], plan: dict):
+    list_verspaetung = []
+    for eintrag in changes:
+        pt_plan = plan.get(eintrag["id"])
+        if pt_plan is not None and eintrag["geplante_zeit"] is None:
+            eintrag["geplante_zeit"] = parse_time(pt_plan)
+            eintrag["verspaetung_min"] = calculate_delay(pt_plan, eintrag["ct_raw"])
+        list_verspaetung.append(eintrag)
+    return list_verspaetung
