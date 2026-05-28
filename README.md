@@ -28,6 +28,7 @@ Streamlit Dashboard
 
 ## Project Structure
 
+```
 mvv-pipeline/
 ├── ingestion/          # API extraction and data loading
 ├── transformation/     # Data transformation and joining
@@ -38,3 +39,4 @@ mvv-pipeline/
 │   ├── raw/           # Bronze layer (XML)
 │   └── transformed/   # Silver layer (JSON)
 └── utils/             # Logging utilities
+```
