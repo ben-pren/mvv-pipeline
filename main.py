@@ -34,7 +34,7 @@ save_transformed_data(joined_data, "joined")
 conn = init_warehouse()
 insert_departures(conn, joined_data)
 
-result = conn.execute("SELECT COUNT(*) FROM departures").fetchone()
-logger.info(f"Einträge in der Datenbank: {result[0]}")
+delays = conn.execute("SELECT COUNT(*) FROM delays").fetchone()
+logger.info(f"Einträge in delays: {delays[0]}")
 
 

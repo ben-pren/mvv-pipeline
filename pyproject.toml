@@ -9,4 +9,14 @@ dependencies = [
     "duckdb>=1.5.3",
     "python-dotenv>=1.2.2",
     "requests>=2.34.2",
+    "streamlit>=1.57.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ingestion*", "transformation*", "utils*"]
+exclude = ["data*", "logs*", "dashboard*", "orchestration*", "transformation_dbt*"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.backends.legacy:build"

@@ -5,3 +5,8 @@ __pycache__/
 .env
 data
 logs/*.log
+transformation_dbt/target/
+transformation_dbt/dbt_packages/
+transformation_dbt/logs/
+orchestration/airflow/docker-compose.override.yml
+.claude/

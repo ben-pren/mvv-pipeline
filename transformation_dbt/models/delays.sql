@@ -1,0 +1,1 @@
+SELECT * FROM departures WHERE verspaetung_min IS NOT NULL

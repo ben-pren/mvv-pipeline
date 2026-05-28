@@ -8,14 +8,14 @@ logger = get_logger(__name__)
 def parse_time (time: str | None) -> str | None:
     if time is None:
         return None 
-    dt = datetime.strptime(time, "%d%m%y%H%M")
+    dt = datetime.strptime(time, "%y%m%d%H%M")
     return dt.strftime("%Y-%m-%d %H:%M")
 
 def calculate_delay (pt: str | None, ct: str | None) -> int | None:
     if pt is None or ct is None:
         return None
-    pt = datetime.strptime(pt, "%d%m%y%H%M")
-    ct = datetime.strptime(ct, "%d%m%y%H%M")
+    pt = datetime.strptime(pt, "%y%m%d%H%M")
+    ct = datetime.strptime(ct, "%y%m%d%H%M")
     verspaetung = (ct - pt).seconds // 60
     return verspaetung 
 

@@ -1,0 +1,7 @@
+transformation_dbt:
+  outputs:
+    dev:
+      type: duckdb
+      path: /usr/local/airflow/projects/mvv-pipeline/data/warehouse.duckdb
+      threads: 1
+  target: dev

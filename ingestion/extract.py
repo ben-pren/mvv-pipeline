@@ -22,8 +22,9 @@ def get_station(station: str) -> str:
     }
     
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     logger.info(f"Station Suche fuer '{station}' fertiggestellt")
-    return response.text 
+    return response.text
 
 
 
@@ -36,6 +37,7 @@ def get_changes (eva_no: str) -> str:
     }
 
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     logger.info(f"Aenderungen geholt fuer station {eva_no}")
     return response.text
 
@@ -50,6 +52,7 @@ def get_plan (eva_no: str, date: str, hour: str) -> str:
     }
 
     response = requests.get(url, headers=headers)
+    response.raise_for_status()
     logger.info(f"Plan geholt fuer station {eva_no}, datum {date}, stunde {hour}")
     return response.text
 
